@@ -1,0 +1,1829 @@
+openapi: 3.0.0
+info:
+  title: Ember API
+  version: "0.2"
+  description: Comprehensive specifications for all Ember API endpoints, incorporating the complete set of DeFi capabilities.
+
+servers:
+  - url: https://api.emberai.xyz/v1
+    description: Production server
+
+paths:
+  /create_transfer:
+    post:
+      summary: Creates an unsigned transaction payload for sending tokens.
+      tags:
+        - Transfers
+      requestBody:
+        description: Transfer request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransferRequest'
+      responses:
+        '200':
+          description: Successful transfer creation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTransferResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /create_swap:
+    post:
+      summary: Creates an unsigned transaction payload for swapping tokens.
+      tags:
+        - Swaps
+      requestBody:
+        description: Swap request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSwapRequest'
+      responses:
+        '200':
+          description: Successful swap creation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSwapResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /create_limit_order:
+    post:
+      summary: Creates a limit order for token swaps.
+      tags:
+        - Swaps
+      requestBody:
+        description: Limit order request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLimitOrderRequest'
+      responses:
+        '200':
+          description: Successful limit order creation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateLimitOrderResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /add_liquidity:
+    post:
+      summary: Creates a new liquidity position in a DEX pool.
+      tags:
+        - Liquidity
+      requestBody:
+        description: Add liquidity request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddLiquidityRequest'
+      responses:
+        '200':
+          description: Successful liquidity addition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddLiquidityResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /remove_liquidity:
+    post:
+      summary: Removes liquidity from a DEX pool position.
+      tags:
+        - Liquidity
+      requestBody:
+        description: Remove liquidity request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveLiquidityRequest'
+      responses:
+        '200':
+          description: Successful liquidity removal.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoveLiquidityResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /lend_tokens:
+    post:
+      summary: Supplies assets to a lending protocol.
+      tags:
+        - Lending
+      requestBody:
+        description: Lend tokens request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LendTokensRequest'
+      responses:
+        '200':
+          description: Successful lending of tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LendTokensResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /withdraw_lent_tokens:
+    post:
+      summary: Withdraws assets from a lending position.
+      tags:
+        - Lending
+      requestBody:
+        description: Withdraw lent tokens request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WithdrawLentTokensRequest'
+      responses:
+        '200':
+          description: Successful withdrawal of lent tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawLentTokensResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /borrow_tokens:
+    post:
+      summary: Creates a new borrowing position using deposited collateral.
+      tags:
+        - Borrowing
+      requestBody:
+        description: Borrow tokens request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BorrowTokensRequest'
+      responses:
+        '200':
+          description: Successful borrowing of tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BorrowTokensResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /repay_borrowed_tokens:
+    post:
+      summary: Repays borrowed assets.
+      tags:
+        - Borrowing
+      requestBody:
+        description: Repay borrowed tokens request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RepayBorrowedTokensRequest'
+      responses:
+        '200':
+          description: Successful repayment of borrowed tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepayBorrowedTokensResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /stake_tokens:
+    post:
+      summary: Creates a new staking position.
+      tags:
+        - Staking
+      requestBody:
+        description: Stake tokens request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StakeTokensRequest'
+      responses:
+        '200':
+          description: Successful staking of tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StakeTokensResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /unstake_tokens:
+    post:
+      summary: Unstakes tokens from a staking position.
+      tags:
+        - Staking
+      requestBody:
+        description: Unstake tokens request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnstakeTokensRequest'
+      responses:
+        '200':
+          description: Successful unstaking of tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnstakeTokensResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /mint_tokens:
+    post:
+      summary: Creates an unsigned transaction payload for minting tokens.
+      tags:
+        - Minting & Burning
+      requestBody:
+        description: Mint tokens request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MintTokensRequest'
+      responses:
+        '200':
+          description: Successful minting of tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MintTokensResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /burn_tokens:
+    post:
+      summary: Creates an unsigned transaction payload for burning tokens.
+      tags:
+        - Minting & Burning
+      requestBody:
+        description: Burn tokens request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BurnTokensRequest'
+      responses:
+        '200':
+          description: Successful burning of tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BurnTokensResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /submit_transaction:
+    post:
+      summary: Submits a signed transaction to the network.
+      tags:
+        - Transactions
+      requestBody:
+        description: Submit transaction request payload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitTransactionRequest'
+      responses:
+        '200':
+          description: Successful transaction submission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitTransactionResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /get_token_data:
+    get:
+      summary: Retrieves detailed information about a specific token.
+      tags:
+        - Data
+      parameters:
+        - in: query
+          name: chainId
+          schema:
+            type: integer
+          required: true
+          description: Chain ID of the token
+        - in: query
+          name: address
+          schema:
+            type: string
+          required: true
+          description: Address of the token
+      responses:
+        '200':
+          description: Successful retrieval of token data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTokenDataResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /get_all_supported_tokens:
+    get:
+      summary: Retrieves a list of all supported tokens across all chains.
+      tags:
+        - Data
+      parameters:
+        - in: query
+          name: chainId
+          schema:
+            type: integer
+          required: false
+          description: Chain ID to filter tokens
+        - in: query
+          name: includeMetadata
+          schema:
+            type: boolean
+          required: false
+          description: Whether to include metadata
+      responses:
+        '200':
+          description: Successful retrieval of supported tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllSupportedTokensResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /get_all_supported_chains:
+    get:
+      summary: Retrieves information about all supported blockchain networks.
+      tags:
+        - Data
+      responses:
+        '200':
+          description: Successful retrieval of supported chains.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllSupportedChainsResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+  /get_social_sentiment:
+    get:
+      summary: Retrieves social sentiment data for a token or protocol.
+      tags:
+        - Data
+      parameters:
+        - in: query
+          name: identifier
+          schema:
+            type: string
+          required: true
+          description: Token address or protocol name
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [TOKEN, PROTOCOL]
+          required: true
+          description: Type of identifier
+        - in: query
+          name: timeframe
+          schema:
+            type: string
+            enum: [24h, 7d, 30d]
+          required: true
+          description: Timeframe for sentiment analysis
+      responses:
+        '200':
+          description: Successful retrieval of social sentiment data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSocialSentimentResponse'
+        default:
+          $ref: '#/components/responses/StandardError'
+
+components:
+  schemas:
+    CreateTransferRequest:
+      type: object
+      properties:
+        chainId:
+          type: integer
+          example: 1
+        fromAddress:
+          type: string
+          example: "0xSender..."
+        toAddress:
+          type: string
+          example: "0xRecipient..."
+        token:
+          type: string
+          example: "0xTokenAddress"
+        amount:
+          type: string
+          example: "100"
+        maxFee:
+          type: string
+          example: "5"
+      required:
+        - chainId
+        - fromAddress
+        - toAddress
+        - token
+        - amount
+        - maxFee
+
+    CreateTransferResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              type: object
+              description: Transaction details specific to the blockchain.
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+      required:
+        - success
+        - result
+
+    CreateSwapRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xSeller..."
+        swapType:
+          type: string
+          enum: [MARKET_SELL, LIMIT_SELL]
+          example: "MARKET_SELL"
+        sellToken:
+          type: object
+          properties:
+            chainId:
+              type: integer
+              example: 1
+            address:
+              type: string
+              example: "0xToken..."
+          required:
+            - chainId
+            - address
+        buyToken:
+          type: object
+          properties:
+            chainId:
+              type: integer
+              example: 1
+            address:
+              type: string
+              example: "0xToken..."
+          required:
+            - chainId
+            - address
+        sellAmount:
+          type: string
+          example: "100"
+        slippageTolerance:
+          type: string
+          example: "1.0"
+        maxFee:
+          type: string
+          example: "5"
+      required:
+        - fromAddress
+        - swapType
+        - sellToken
+        - buyToken
+        - sellAmount
+        - slippageTolerance
+        - maxFee
+
+    CreateSwapResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              type: object
+              description: Transaction details specific to the blockchain.
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            estimatedOutput:
+              type: object
+              properties:
+                amount:
+                  type: string
+                  example: "98.5"
+                token:
+                  type: string
+                  example: "0xToken..."
+                value:
+                  type: string
+                  example: "98.5"
+      required:
+        - success
+        - result
+
+    CreateLimitOrderRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xSeller..."
+        sellToken:
+          type: object
+          properties:
+            chainId:
+              type: integer
+              example: 1
+            address:
+              type: string
+              example: "0xToken..."
+          required:
+            - chainId
+            - address
+        buyToken:
+          type: object
+          properties:
+            chainId:
+              type: integer
+              example: 1
+            address:
+              type: string
+              example: "0xToken..."
+            amount:
+              type: string
+              example: "1800"
+          required:
+            - chainId
+            - address
+            - amount
+        sellAmount:
+          type: string
+          example: "100"
+        limitPrice:
+          type: string
+          example: "1800"
+        expiration:
+          type: string
+          format: date-time
+          example: "2024-12-31T23:59:59Z"
+        maxFee:
+          type: string
+          example: "5"
+      required:
+        - fromAddress
+        - sellToken
+        - buyToken
+        - sellAmount
+        - limitPrice
+        - expiration
+        - maxFee
+
+    CreateLimitOrderResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            orderId:
+              type: string
+              example: "limit-123"
+            status:
+              type: string
+              example: "OPEN"
+            expiresAt:
+              type: string
+              format: date-time
+              example: "2024-12-31T23:59:59Z"
+            orderDetails:
+              $ref: '#/components/schemas/OrderDetails'
+      required:
+        - success
+        - result
+
+    AddLiquidityRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xProvider..."
+        protocol:
+          type: string
+          example: "UNISWAP_V3"
+        poolAddress:
+          type: string
+          example: "0xPool..."
+        token0:
+          type: object
+          properties:
+            address:
+              type: string
+              example: "0xToken0..."
+            amount:
+              type: string
+              example: "100"
+          required:
+            - address
+            - amount
+        token1:
+          type: object
+          properties:
+            address:
+              type: string
+              example: "0xToken1..."
+            amount:
+              type: string
+              example: "100"
+          required:
+            - address
+            - amount
+        feeTier:
+          type: integer
+          example: 3000
+        tickLower:
+          type: integer
+          example: -887220
+        tickUpper:
+          type: integer
+          example: 887220
+        maxFee:
+          type: string
+          example: "10"
+      required:
+        - fromAddress
+        - protocol
+        - poolAddress
+        - token0
+        - token1
+        - feeTier
+        - tickLower
+        - tickUpper
+        - maxFee
+
+    AddLiquidityResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              type: object
+              description: Transaction details.
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            positionDetails:
+              type: object
+              properties:
+                tokenId:
+                  type: string
+                  example: "12345"
+                token0Deposited:
+                  type: string
+                  example: "100"
+                token1Deposited:
+                  type: string
+                  example: "100"
+                feeTier:
+                  type: integer
+                  example: 3000
+                tickLower:
+                  type: integer
+                  example: -887220
+                tickUpper:
+                  type: integer
+                  example: 887220
+                expectedAPR:
+                  type: string
+                  example: "25.5"
+      required:
+        - success
+        - result
+
+    RemoveLiquidityRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xProvider..."
+        protocol:
+          type: string
+          example: "UNISWAP_V3"
+        positionId:
+          type: string
+          example: "12345"
+        percentage:
+          type: integer
+          example: 100
+        maxFee:
+          type: string
+          example: "10"
+        recipient:
+          type: string
+          example: "0xRecipient..."
+      required:
+        - fromAddress
+        - protocol
+        - positionId
+        - percentage
+        - maxFee
+      additionalProperties: false
+
+    RemoveLiquidityResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              type: object
+              description: Transaction details.
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            withdrawalDetails:
+              $ref: '#/components/schemas/WithdrawalDetails'
+      required:
+        - success
+        - result
+
+    LendTokensRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xLender..."
+        protocol:
+          type: string
+          example: "AAVE_V3"
+        token:
+          type: string
+          example: "0xToken..."
+        amount:
+          type: string
+          example: "1000"
+        interestRateMode:
+          type: string
+          enum: [VARIABLE, STABLE]
+          example: "VARIABLE"
+        enableCollateral:
+          type: boolean
+          example: true
+        maxFee:
+          type: string
+          example: "5"
+      required:
+        - fromAddress
+        - protocol
+        - token
+        - amount
+        - interestRateMode
+        - enableCollateral
+        - maxFee
+
+    LendTokensResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              type: object
+              description: Transaction details.
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            positionDetails:
+              type: object
+              properties:
+                suppliedToken:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      example: "0xToken..."
+                    amount:
+                      type: string
+                      example: "1000"
+                aToken:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      example: "0xAToken..."
+                    amount:
+                      type: string
+                      example: "1000"
+                currentAPY:
+                  type: string
+                  example: "3.5"
+                isCollateral:
+                  type: boolean
+                  example: true
+                ltv:
+                  type: string
+                  example: "0.75"
+                liquidationThreshold:
+                  type: string
+                  example: "0.8"
+      required:
+        - success
+        - result
+
+    WithdrawLentTokensRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xLender..."
+        protocol:
+          type: string
+          example: "AAVE_V3"
+        token:
+          type: string
+          example: "0xToken..."
+        amount:
+          type: string
+          example: "500"
+        maxFee:
+          type: string
+          example: "5"
+        recipient:
+          type: string
+          example: "0xRecipient..."
+      required:
+        - fromAddress
+        - protocol
+        - token
+        - amount
+        - maxFee
+      additionalProperties: false
+
+    WithdrawLentTokensResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              type: object
+              description: Transaction details.
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            withdrawalDetails:
+              type: object
+              properties:
+                withdrawnToken:
+                  type: object
+                  properties:
+                    address:
+                      type: string
+                      example: "0xToken..."
+                    amount:
+                      type: string
+                      example: "500"
+                  required:
+                    - address
+                    - amount
+                remainingPosition:
+                  type: object
+                  properties:
+                    suppliedAmount:
+                      type: string
+                      example: "500"
+                    aTokenAmount:
+                      type: string
+                      example: "500"
+                  required:
+                    - suppliedAmount
+                    - aTokenAmount
+                earnedInterest:
+                  type: string
+                  example: "5.5"
+              required:
+                - withdrawnToken
+                - remainingPosition
+                - earnedInterest
+      required:
+        - success
+        - result
+
+    BorrowTokensRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xBorrower..."
+        protocol:
+          type: string
+          example: "AAVE_V3"
+        collateralToken:
+          type: string
+          example: "0xCollateralToken..."
+        collateralAmount:
+          type: string
+          example: "1000"
+        borrowToken:
+          type: string
+          example: "0xBorrowToken..."
+        borrowAmount:
+          type: string
+          example: "500"
+        interestRateMode:
+          type: string
+          enum: [VARIABLE, STABLE]
+          example: "VARIABLE"
+        maxFee:
+          type: string
+          example: "5"
+      required:
+        - fromAddress
+        - protocol
+        - collateralToken
+        - collateralAmount
+        - borrowToken
+        - borrowAmount
+        - interestRateMode
+        - maxFee
+
+    BorrowTokensResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            borrowingPositionId:
+              type: string
+              example: "borrow-123"
+            collateralToken:
+              type: string
+              example: "0xCollateralToken..."
+            collateralAmount:
+              type: string
+              example: "1000"
+            borrowToken:
+              type: string
+              example: "0xBorrowToken..."
+            borrowAmount:
+              type: string
+              example: "500"
+            interestRate:
+              type: string
+              example: "3.5%"
+            collateralizationRatio:
+              type: string
+              example: "150%"
+      required:
+        - success
+        - result
+
+    RepayBorrowedTokensRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xBorrower..."
+        protocol:
+          type: string
+          example: "AAVE_V3"
+        borrowPositionId:
+          type: string
+          example: "borrow-123"
+        borrowToken:
+          type: string
+          example: "0xToken..."
+        repayAmount:
+          type: string
+          example: "100"
+        interestRateMode:
+          type: string
+          enum: [VARIABLE, STABLE]
+          example: "VARIABLE"
+        maxFee:
+          type: string
+          example: "5"
+      required:
+        - fromAddress
+        - protocol
+        - borrowPositionId
+        - borrowToken
+        - repayAmount
+        - interestRateMode
+        - maxFee
+
+    RepayBorrowedTokensResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              $ref: '#/components/schemas/TransactionPlan'
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            repaymentDetails:
+              type: object
+              properties:
+                borrowPositionId:
+                  type: string
+                  example: "borrow-123"
+                repaidAmount:
+                  type: string
+                  example: "500"
+                remainingDebt:
+                  type: string
+                  example: "0"
+                collateralStatus:
+                  type: string
+                  example: "SAFE"
+              required:
+                - borrowPositionId
+                - repaidAmount
+                - remainingDebt
+                - collateralStatus
+      required:
+        - success
+        - result
+
+    StakeTokensRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xStaker..."
+        protocol:
+          type: string
+          example: "LIDO"
+        stakeToken:
+          type: string
+          example: "0xToken..."
+        amount:
+          type: string
+          example: "100"
+        maxFee:
+          type: string
+          example: "5"
+      required:
+        - fromAddress
+        - protocol
+        - stakeToken
+        - amount
+        - maxFee
+
+    StakeTokensResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              $ref: '#/components/schemas/TransactionPlan'
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            stakingPosition:
+              type: object
+              properties:
+                positionId:
+                  type: string
+                  example: "stake-123"
+                stakedAmount:
+                  type: string
+                  example: "1000"
+                stakingAPR:
+                  type: string
+                  example: "10%"
+              required:
+                - positionId
+                - stakedAmount
+                - stakingAPR
+      required:
+        - success
+        - result
+
+    UnstakeTokensRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xStaker..."
+        protocol:
+          type: string
+          example: "POLYGON_SUSHISWAP"
+        stakePositionId:
+          type: string
+          example: "stake-123"
+        amount:
+          type: string
+          example: "500"
+        maxFee:
+          type: string
+          example: "5"
+        recipient:
+          type: string
+          example: "0xRecipient..."
+          nullable: true
+      required:
+        - fromAddress
+        - protocol
+        - stakePositionId
+        - amount
+        - maxFee
+
+    UnstakeTokensResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              $ref: '#/components/schemas/TransactionPlan'
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            unstakeDetails:
+              type: object
+              properties:
+                stakePositionId:
+                  type: string
+                  example: "stake-123"
+                unstakedAmount:
+                  type: string
+                  example: "500"
+                remainingStakedAmount:
+                  type: string
+                  example: "500"
+              required:
+                - stakePositionId
+                - unstakedAmount
+                - remainingStakedAmount
+      required:
+        - success
+        - result
+
+    MintTokensRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xMinter..."
+        protocol:
+          type: string
+          example: "ETHEREUM"
+        token:
+          type: string
+          example: "0xToken..."
+        amount:
+          type: string
+          example: "100"
+        recipient:
+          type: string
+          example: "0xRecipient..."
+          nullable: true
+        maxFee:
+          type: string
+          example: "5"
+      required:
+        - fromAddress
+        - protocol
+        - token
+        - amount
+        - maxFee
+
+    MintTokensResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              $ref: '#/components/schemas/TransactionPlan'
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            mintedToken:
+              type: object
+              properties:
+                tokenAddress:
+                  type: string
+                  example: "0xMintToken..."
+                amount:
+                  type: string
+                  example: "1000"
+              required:
+                - tokenAddress
+                - amount
+      required:
+        - success
+        - result
+
+    BurnTokensRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xBurner..."
+        protocol:
+          type: string
+          example: "POLYGON_MATIC"
+        token:
+          type: string
+          example: "0xBurnToken..."
+        amount:
+          type: string
+          example: "500"
+        maxFee:
+          type: string
+          example: "5"
+      required:
+        - fromAddress
+        - protocol
+        - token
+        - amount
+        - maxFee
+
+    BurnTokensResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionPlan:
+              $ref: '#/components/schemas/TransactionPlan'
+            feeBreakdown:
+              $ref: '#/components/schemas/FeeBreakdown'
+            burnedToken:
+              type: object
+              properties:
+                tokenAddress:
+                  type: string
+                  example: "0xBurnToken..."
+                amount:
+                  type: string
+                  example: "500"
+              required:
+                - tokenAddress
+                - amount
+      required:
+        - success
+        - result
+
+    SubmitTransactionRequest:
+      type: object
+      properties:
+        fromAddress:
+          type: string
+          example: "0xUser..."
+        signedTransaction:
+          type: string
+          example: "0xSignedTx..."
+        protocol:
+          type: string
+          example: "ETHEREUM"
+      required:
+        - fromAddress
+        - signedTransaction
+        - protocol
+
+    SubmitTransactionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            transactionHash:
+              type: string
+              example: "0xHash..."
+            status:
+              type: string
+              example: "CONFIRMED"
+            timestamp:
+              type: string
+              format: date-time
+              example: "2024-01-01T12:00:00Z"
+      required:
+        - success
+        - result
+
+    GetTokenDataResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            tokenAddress:
+              type: string
+              example: "0xToken..."
+            name:
+              type: string
+              example: "Token One"
+            symbol:
+              type: string
+              example: "TK1"
+            decimals:
+              type: integer
+              example: 18
+            totalSupply:
+              type: string
+              example: "1000000"
+            holders:
+              type: integer
+              example: 5000
+            contractURI:
+              type: string
+              example: "https://token.metadata.url"
+      required:
+        - success
+        - result
+
+    GetAllSupportedTokensResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            tokens:
+              type: array
+              items:
+                type: object
+                properties:
+                  address:
+                    type: string
+                    example: "0xToken1..."
+                  chainId:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Token One"
+                  symbol:
+                    type: string
+                    example: "TK1"
+                  decimals:
+                    type: integer
+                    example: 18
+                  supported:
+                    type: boolean
+                    example: true
+                  metadata:
+                    type: object
+                    example: {} # if includeMetadata is true
+                required:
+                  - address
+                  - chainId
+                  - name
+                  - symbol
+                  - decimals
+                  - supported
+            pagination:
+              type: object
+              properties:
+                page:
+                  type: integer
+                  example: 1
+                perPage:
+                  type: integer
+                  example: 100
+                total:
+                  type: integer
+                  example: 500
+      required:
+        - success
+        - result
+
+    GetAllSupportedChainsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            chains:
+              type: array
+              items:
+                type: object
+                properties:
+                  chainId:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Ethereum"
+                  nativeCurrency:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                        example: "ETH"
+                      decimals:
+                        type: integer
+                        example: 18
+                    required:
+                      - symbol
+                      - decimals
+                  rpcUrls:
+                    type: array
+                    items:
+                      type: string
+                      example: "https://eth.public-rpc.com"
+                  blockExplorer:
+                    type: string
+                    example: "https://etherscan.io"
+                  features:
+                    type: array
+                    items:
+                      type: string
+                      example: "LENDING"
+                  status:
+                    type: string
+                    example: "ACTIVE"
+                required:
+                  - chainId
+                  - name
+                  - nativeCurrency
+                  - rpcUrls
+                  - blockExplorer
+                  - features
+                  - status
+      required:
+        - success
+        - result
+
+    GetSocialSentimentResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          properties:
+            sentiment:
+              type: object
+              properties:
+                score:
+                  type: number
+                  format: float
+                  example: 0.75
+                volume:
+                  type: integer
+                  example: 1000
+                trending:
+                  type: boolean
+                  example: true
+                sources:
+                  type: object
+                  properties:
+                    twitter:
+                      type: object
+                      properties:
+                        mentions:
+                          type: integer
+                          example: 500
+                        sentiment:
+                          type: number
+                          format: float
+                          example: 0.8
+                      required:
+                        - mentions
+                        - sentiment
+                    reddit:
+                      type: object
+                      properties:
+                        mentions:
+                          type: integer
+                          example: 300
+                        sentiment:
+                          type: number
+                          format: float
+                          example: 0.7
+                      required:
+                        - mentions
+                        - sentiment
+                    discord:
+                      type: object
+                      properties:
+                        mentions:
+                          type: integer
+                          example: 200
+                        sentiment:
+                          type: number
+                          format: float
+                          example: 0.75
+                      required:
+                        - mentions
+                        - sentiment
+                timeframe:
+                  type: string
+                  example: "24h"
+                lastUpdated:
+                  type: string
+                  format: date-time
+                  example: "2024-01-01T12:00:00Z"
+              required:
+                - score
+                - volume
+                - trending
+                - sources
+                - timeframe
+                - lastUpdated
+      required:
+        - success
+        - result
+
+    FeeBreakdown:
+      type: object
+      properties:
+        gasFee:
+          type: string
+          example: "1.23"
+        serviceFee:
+          type: string
+          example: "0.50"
+        slippageCost:
+          type: string
+          example: "0.00"
+        total:
+          type: string
+          example: "1.73"
+      required:
+        - gasFee
+        - serviceFee
+        - slippageCost
+        - total
+
+    TransactionPlan:
+      type: object
+      description: Transaction details specific to the blockchain (e.g., userOp for ERC-4337, raw tx for EVM, instructions for Solana)
+      additionalProperties: true
+
+    OrderDetails:
+      type: object
+      properties:
+        sellToken:
+          type: object
+          properties:
+            chainId:
+              type: integer
+              example: 1
+            address:
+              type: string
+              example: "0xToken..."
+            amount:
+              type: string
+              example: "100"
+          required:
+            - chainId
+            - address
+            - amount
+        buyToken:
+          type: object
+          properties:
+            chainId:
+              type: integer
+              example: 1
+            address:
+              type: string
+              example: "0xToken..."
+            amount:
+              type: string
+              example: "1800"
+          required:
+            - chainId
+            - address
+            - amount
+        limitPrice:
+          type: string
+          example: "1800"
+      required:
+        - sellToken
+        - buyToken
+        - limitPrice
+
+    WithdrawalDetails:
+      type: object
+      properties:
+        token0:
+          type: object
+          properties:
+            address:
+              type: string
+              example: "0xToken0..."
+            amount:
+              type: string
+              example: "102.5"
+          required:
+            - address
+            - amount
+        token1:
+          type: object
+          properties:
+            address:
+              type: string
+              example: "0xToken1..."
+            amount:
+              type: string
+              example: "101.8"
+          required:
+            - address
+            - amount
+        collectedFees:
+          type: object
+          properties:
+            token0:
+              type: string
+              example: "2.5"
+            token1:
+              type: string
+              example: "1.8"
+          required:
+            - token0
+            - token1
+      required:
+        - token0
+        - token1
+        - collectedFees
+
+    StandardError:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "ERROR_CODE"
+            message:
+              type: string
+              example: "Human readable error message"
+            details:
+              type: object
+              description: Additional error context
+            requestId:
+              type: string
+              example: "req_123"
+          required:
+            - code
+            - message
+            - requestId
+      required:
+        - success
+        - error
+
+    ValidationError:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "VALIDATION_ERROR"
+            message:
+              type: string
+              example: "Invalid request parameters"
+            validationErrors:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    example: "amount"
+                  message:
+                    type: string
+                    example: "Must be greater than 0"
+                  errorCode:
+                    type: string
+                    example: "INVALID_AMOUNT"
+                required:
+                  - field
+                  - message
+                  - errorCode
+          required:
+            - code
+            - message
+            - validationErrors
+      required:
+        - success
+        - error
+
+  responses:
+    StandardError:
+      description: Standard error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardError'
+
+    ValidationError:
+      description: Validation error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Transfers
+    description: Endpoints related to token transfers.
+  - name: Swaps
+    description: Endpoints related to token swaps.
+  - name: Liquidity
+    description: Endpoints related to liquidity positions.
+  - name: Lending
+    description: Endpoints related to lending operations.
+  - name: Borrowing
+    description: Endpoints related to borrowing operations.
+  - name: Staking
+    description: Endpoints related to staking operations.
+  - name: Minting & Burning
+    description: Endpoints related to minting and burning tokens.
+  - name: Transactions
+    description: Endpoints related to transaction submission.
+  - name: Data
+    description: Endpoints related to data retrieval. 
