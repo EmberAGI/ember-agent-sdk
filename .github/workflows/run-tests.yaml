@@ -1,0 +1,19 @@
+name: Run all integration tests
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  push_latest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+
+      - name: Install rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Run tests
+        run: |
+          cargo test
