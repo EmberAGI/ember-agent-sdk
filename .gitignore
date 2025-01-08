@@ -12,3 +12,6 @@ Cargo.lock
 *.pdb
 
 .DS_Store
+
+# Folder for creating temp source code
+temp-source/
