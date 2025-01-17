@@ -1,21 +1,12 @@
 [package]
-name = "openapi"
-version = "0.2.0"
-authors = ["OpenAPI Generator team and contributors"]
-description = "Comprehensive specifications for all Ember API endpoints, incorporating the complete set of DeFi capabilities."
-# Override this license by providing a License Object in the OpenAPI.
-license = "Unlicense"
+name = "ember-agent-sdk"
+version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-serde = { version = "^1.0", features = ["derive"] }
-serde_with = { version = "^3.8", default-features = false, features = [
-    "base64",
-    "std",
-    "macros",
-] }
-serde_json = "^1.0"
-serde_repr = "^0.1"
-url = "^2.5"
-uuid = { version = "^1.8", features = ["serde", "v4"] }
-reqwest = { version = "^0.12", features = ["json", "multipart"] }
+tonic = "0.12"
+prost = "0.13"
+prost-types = "0.13"
+
+[build-dependencies]
+tonic-build = "0.12"
