@@ -1,11 +1,4 @@
-#![allow(unused_imports)]
-#![allow(clippy::too_many_arguments)]
+#[path = "ember_agents_onchain.v1.rs"]
+pub mod ember_agents_sdk_v1;
 
-extern crate serde_repr;
-extern crate serde;
-extern crate serde_json;
-extern crate url;
-extern crate reqwest;
-
-pub mod apis;
-pub mod models;
+pub use ember_agents_sdk_v1::*;

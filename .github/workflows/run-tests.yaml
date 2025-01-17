@@ -1,15 +1,45 @@
 name: Run all integration tests
 
 on:
+  workflow_dispatch:
   push:
-    branches: [main]
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
 
 jobs:
-  push_latest:
+  continuous_integration:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v4
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v3
+
+      - name: Install rust toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+      - name: Check types are up-to-date
+        run: |
+          cargo build
+          if [[ $(git status --porcelain) ]]; then
+            echo "Run cargo build and commit to the repo again."
+            exit 1
+          fi
+
+  integration_testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v3
 
       - name: Install rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1

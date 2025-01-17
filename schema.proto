@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package ember_agents_onchain.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// The DataService provides information about chains and tokens.
+//
+// Possible gRPC error codes for these methods:
+// - INVALID_ARGUMENT: The request parameters are malformed or invalid.
+// - NOT_FOUND: The requested resource(s) could not be found.
+// - INTERNAL: An unexpected server-side error occurred.
+// - UNAUTHENTICATED / PERMISSION_DENIED: If authentication or authorization
+// fails.
+//
+service DataService {
+  // Returns a list of supported chains.
+  // Error codes:
+  //   - INVALID_ARGUMENT if filtering or pagination parameters are invalid.
+  //   - INTERNAL for server-side issues.
+  rpc GetChains(GetChainsRequest) returns (GetChainsResponse) {}
+
+  // Returns a list of tokens (potentially filtered by chain or other criteria).
+  // Error codes:
+  //   - INVALID_ARGUMENT if filtering or pagination parameters are invalid.
+  //   - NOT_FOUND if no tokens match the request.
+  //   - INTERNAL for server-side issues.
+  rpc GetTokens(GetTokensRequest) returns (GetTokensResponse) {}
+}
+
+// Chain type enum
+enum ChainType {
+  CHAIN_TYPE_UNSPECIFIED = 0;
+  CHAIN_TYPE_EVM = 1;
+  CHAIN_TYPE_SOLANA = 2;
+}
+
+message Chain {
+  string chain_id = 1;
+  ChainType type = 2;
+  string icon_uri = 3;
+  Token native_token = 4;
+  string http_rpc_url = 5;
+  string name = 6;
+  repeated string block_explorer_urls = 7;
+
+  // Timestamps
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+message Token {
+  // For native tokens, this may be empty.
+  string token_id = 1;
+  string name = 2;
+  string symbol = 3;
+  bool is_native = 4;
+  int32 decimals = 5;
+  string chain_id = 6;
+  string icon_uri = 7;
+
+  // Store as a string to avoid floating-point precision issues.
+  // e.g., "123.456789"
+  string usd_price = 8;
+
+  bool is_vetted = 9;
+
+  // Timestamps
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+// Request to get chains, with optional filtering/pagination.
+message GetChainsRequest {
+  string filter = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message GetChainsResponse {
+  repeated Chain chains = 1;
+  string next_page_token = 2;
+}
+
+// Request to get tokens, with optional filter by chain_id, plus pagination.
+message GetTokensRequest {
+  // If empty, returns tokens across all chains.
+  string chain_id = 1;
+  string filter = 2;
+  int32 page_size = 3;
+  string page_token = 4;
+}
+
+message GetTokensResponse {
+  repeated Token tokens = 1;
+  string next_page_token = 2;
+}
