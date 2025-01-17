@@ -21,6 +21,9 @@ jobs:
       - name: Check formatting
         run: cargo fmt --check
 
+      - name: Check lint warnings
+        run: cargo clippy --all-features
+
       - name: Check types are up-to-date
         run: |
           cargo build
