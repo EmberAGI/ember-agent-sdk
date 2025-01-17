@@ -124,10 +124,10 @@ pub mod data_service_client {
         dead_code,
         missing_docs,
         clippy::wildcard_imports,
-        clippy::let_unit_value,
+        clippy::let_unit_value
     )]
-    use tonic::codegen::*;
     use tonic::codegen::http::Uri;
+    use tonic::codegen::*;
     /// The DataService provides information about chains and tokens.
     ///
     /// Possible gRPC error codes for these methods:
@@ -180,9 +180,8 @@ pub mod data_service_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + std::marker::Send + std::marker::Sync,
         {
             DataServiceClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -224,27 +223,19 @@ pub mod data_service_client {
         pub async fn get_chains(
             &mut self,
             request: impl tonic::IntoRequest<super::GetChainsRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::GetChainsResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::unknown(
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::GetChainsResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::unknown(format!("Service was not ready: {}", e.into()))
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/ember_agents_onchain.v1.DataService/GetChains",
             );
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(
-                    GrpcMethod::new("ember_agents_onchain.v1.DataService", "GetChains"),
-                );
+            req.extensions_mut().insert(GrpcMethod::new(
+                "ember_agents_onchain.v1.DataService",
+                "GetChains",
+            ));
             self.inner.unary(req, path, codec).await
         }
         /// Returns a list of tokens (potentially filtered by chain or other criteria).
@@ -255,27 +246,19 @@ pub mod data_service_client {
         pub async fn get_tokens(
             &mut self,
             request: impl tonic::IntoRequest<super::GetTokensRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::GetTokensResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::unknown(
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::GetTokensResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::unknown(format!("Service was not ready: {}", e.into()))
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/ember_agents_onchain.v1.DataService/GetTokens",
             );
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(
-                    GrpcMethod::new("ember_agents_onchain.v1.DataService", "GetTokens"),
-                );
+            req.extensions_mut().insert(GrpcMethod::new(
+                "ember_agents_onchain.v1.DataService",
+                "GetTokens",
+            ));
             self.inner.unary(req, path, codec).await
         }
     }
